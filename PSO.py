@@ -2,13 +2,13 @@ import random
 import math 
 
 
-max_iter=1000
+max_iter=10000
 target_location=[69,69]
 N=100
 minx=-50
 maxx=50
-w=1
-c1=0.8
+w=0.8
+c1=0.4
 c2=0.8
 bestfit=1000
 best_sworm_postionx=0
@@ -56,8 +56,10 @@ for i in range (N):
 
 for i in range (max_iter):
     for particles in sworm:
-        particles.volictyx=(w*particles.volictyx)+c1*(particles.bestpostionx-particles.postionx)+c2*(best_sworm_postionx-particles.postionx)
-        particles.volictyy=(w*particles.volictyy)+c1*(particles.bestpostiony-particles.postiony)+c2*(best_sworm_postionx-particles.postiony)
+        r1=random.randint(0,2)
+        r2=random.randint(0,2)
+        particles.volictyx=(w*particles.volictyx)+c1*r1*(particles.bestpostionx-particles.postionx)+c2*r2*(best_sworm_postionx-particles.postionx)
+        particles.volictyy=(w*particles.volictyy)+c1*r1*(particles.bestpostiony-particles.postiony)+c2*r2*(best_sworm_postionx-particles.postiony)
         if( particles.volictyx>maxx):
              particles.volictyx=maxx
         elif(particles.volictyx<minx):
@@ -77,5 +79,7 @@ for i in range (max_iter):
         if(fintness(particles.postionx,particles.postiony)<fintness(particles.bestpostionx,particles.bestpostiony)):
            particles.bestpostionx =particles.postionx
            particles.bestpostiony =particles.postiony
-print(bestfit)
+           
+for particles in sworm:
+    print(particles.postionx,particles.postiony)
 print(best_sworm_postionx,best_sworm_postiony)
